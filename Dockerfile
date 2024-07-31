@@ -26,4 +26,4 @@ ENV DJANGO_SETTINGS_MODULE=pollme.settings
 EXPOSE 8000
 
 # Run the Django application
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "pollme.wsgi.application"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "pollme.wsgi:application"]
