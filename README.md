@@ -193,11 +193,120 @@ Create an endpoint to retrieve and list polls by category.
 
 Setup the project as per the instruction provided in the main project and then add categories by running the below command
 
-python manage.py shell
+To add categories, run the following commands in the Django shell:
 
+<code>
+python manage.py shell
+</code>
+
+```python
 from polls.models import Category
 Category.objects.create(name="Technology")
 Category.objects.create(name="Health")
 Category.objects.create(name="Science")
 Category.objects.create(name="Sports")
 Category.objects.create(name="Entertainment")
+
+Changes Made
+Category Feature
+Added the ability to categorize polls. Users can now:
+
+Include a category when creating a poll.
+Modify the category of an existing poll.
+
+Category Management
+Enabled editing of poll categories through:
+The admin interface
+Poll creation/edit forms
+
+UI Enhancements
+Updated the user interface to display polls by category with:
+Improved CSS styling
+Interactive elements
+
+API Endpoints
+Added a new API endpoint to list polls by category:
+<code>/api/polls/category/<category_id>/</code>
+
+Database Path
+Configured the SQLite database to be located at:
+<code>/app/db.sqlite3</code> within the Docker container.
+Usage
+Accessing the Application
+Home Page: <code>http://127.0.0.1:8000/</code>
+Poll List by User: <code>http://127.0.0.1:8000/polls/list/user/</code>
+Add Poll: <code>http://127.0.0.1:8000/polls/add/</code>
+Edit Poll: <code>http://127.0.0.1:8000/polls/edit/<poll_id>/</code>
+Dashboard: <code>http://127.0.0.1:8000/polls/dashboard/</code>
+API Endpoints
+List Polls by Category: <code>GET /api/polls/category/<category_id>/</code>
+Running with Docker
+Build the Docker Image
+<code>
+docker build -t my-django-app .
+</code>
+Run the Docker Container
+<code>
+docker run -p 8000:8000 my-django-app
+</code>
+Deployment to AWS Lambda
+To deploy the Django application to AWS Lambda, follow these steps:
+
+Prepare Your Dockerfile
+Ensure your Dockerfile includes the necessary configurations:
+# Use the official Python image from the Docker Hub
+FROM python:3.9-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the requirements file into the container
+COPY requirements.txt /app/
+
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code into the container
+COPY . /app/
+
+# Ensure SQLite database file is copied
+COPY db.sqlite3 /app/
+
+# Copy static files
+COPY static /app/static
+
+# Set environment variables
+ENV DJANGO_SETTINGS_MODULE=pollme.settings
+
+# Expose the port the app runs on
+EXPOSE 8000
+
+# Run the Django application
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "pollme.wsgi:application"]
+Push Docker Image to AWS ECR
+Authenticate Docker to Your ECR Registry
+
+<code>
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 115011265608.dkr.ecr.ap-south-1.amazonaws.com
+</code>
+Tag Your Docker Image
+
+<code>
+docker tag my-django-app:latest 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest
+</code>
+Push the Docker Image
+
+<code>
+docker push 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest
+</code>
+Create a Lambda Function
+Create a Lambda Function
+
+Use the AWS Management Console or CLI to create a new Lambda function and choose the image from ECR.
+
+Configure API Gateway
+
+Set up an API Gateway to trigger your Lambda function. Ensure the API Gateway is configured to use an HTTP or REST API endpoint.
+
+Testing Your Deployment
+After deploying, test your Lambda function through the API Gateway URL provided by AWS. Ensure your API Gateway points to the correct Lambda function endpoint.
