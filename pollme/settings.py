@@ -85,13 +85,22 @@ WSGI_APPLICATION = 'pollme.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# settings.py
+# settings.py for docker image deployment to lambda
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': '/app/db.sqlite3',  # Path to SQLite file in the container
+#    }
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/app/db.sqlite3',  # Path to SQLite file in the container
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
 
 
 # Password validation
