@@ -181,4 +181,11 @@ For detailed instructions, refer to Google's documentation on [OAuth 2.0](https:
 </div>
 
 
+# Django-Poll-App Modification by Satvik Somvanshi for Deep Logic AI Assignment
 
+I added a new feature to categorize polls into various topics. Implemented following functionalities
+
+Include a category when creating a poll.
+Modify the category of an existing poll.
+Implement a user interface to view polls within a specific category.
+Create an endpoint to retrieve and list polls by category.
