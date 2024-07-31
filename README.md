@@ -183,69 +183,89 @@ For detailed instructions, refer to Google's documentation on [OAuth 2.0](https:
 
 # Django-Poll-App Modification by Satvik Somvanshi for Deep Logic AI Assignment
 
-Here's an enhanced version of your README.md file, formatted for GitHub:
-Django Poll App with Category Feature
-This project extends the Django Poll App with a new category feature, allowing users to categorize polls into various topics. This modification was implemented by Satvik Somvanshi for the Deep Logic AI Assignment.
-New Features
+# PollMe Project
 
-Poll Categorization: Users can now include a category when creating a poll and modify the category of existing polls.
-Category-based Views: Implemented a user interface to view polls within specific categories.
-API Endpoint: Created a new endpoint to retrieve and list polls by category.
+## Overview
 
-Setup
+The PollMe project is a Django-based web application for creating and managing polls. This README provides detailed instructions on setting up, modifying, and deploying the project, including new features added and deployment steps to AWS Lambda.
 
-Clone the repository:
-Copygit clone https://github.com/your-username/django-poll-app.git
-cd django-poll-app
+## Features Added
 
-Set up the project as per the instructions provided in the main project.
-Add categories by running the following commands in the Django shell:
-Copypython manage.py shell
-Then in the Python shell:
-pythonCopyfrom polls.models import Category
+### Category Feature
+
+- **Include a Category When Creating a Poll**: Users can now assign a category to a poll during creation.
+- **Modify the Category of an Existing Poll**: Allows updating the category of a poll after creation.
+
+### Category Management
+
+- **Admin Interface**: Enabled category management through the Django admin interface.
+- **Poll Creation/Edit Forms**: Updated forms to include category selection.
+
+### UI Enhancements
+
+- **Category Display**: Updated the user interface to allow viewing polls by category.
+- **Styling Improvements**: Enhanced CSS styling and interactive elements.
+
+### API Endpoints
+
+- **List Polls by Category**: New API endpoint to retrieve and list polls by category.
+  - **Endpoint**: `/api/polls/category/<category_id>/`
+
+## Setup Instructions
+
+### Clone the Repository
+
+
+git clone https://github.com/your-username/pollme-django.git
+cd pollme-django
+
+Add Categories
+To add categories to your application, follow these steps:
+
+Open the Django Shell
+
+Run the following command to access the Django shell:
+
+
+python manage.py shell
+Create Category Instances
+
+Import the Category model and create instances for each category you want to add:
+
+
+from polls.models import Category
 Category.objects.create(name="Technology")
 Category.objects.create(name="Health")
 Category.objects.create(name="Science")
 Category.objects.create(name="Sports")
 Category.objects.create(name="Entertainment")
+This will create five categories: Technology, Health, Science, Sports, and Entertainment.
 
+Exit the Shell
 
-Changes Made
+After adding the categories, exit the Django shell by typing exit() and pressing Enter.
+
+Now, you can use these categories when creating or editing polls in your application.
+
+<Changes Made>
 Category Feature
-
-Added the ability to categorize polls.
-Users can include a category when creating a poll.
-Users can modify the category of an existing poll.
-
+Categorize Polls: Added the ability to categorize polls. Users can now:
+Include a category when creating a poll.
+Modify the category of an existing poll.
 Category Management
-
-Enabled editing of poll categories through:
-
-The admin interface
-Poll creation/edit forms
-
-
-
+Editing Categories: Enabled editing of poll categories through:
+The admin interface.
+Poll creation/edit forms.
 UI Enhancements
-
-Updated the user interface to display polls by category with:
-
-Improved CSS styling
-Interactive elements
-
-
-
+User Interface: Updated the user interface to display polls by category with:
+Improved CSS styling.
+Interactive elements.
 API Endpoints
-
-Added a new API endpoint to list polls by category:
-Copy/api/polls/category/<category_id>/
-
-
+New Endpoint: Added a new API endpoint to list polls by category:
+/api/polls/category/<category_id>/
 Database Path
-
-Configured the SQLite database to be located at:
-Copy/app/db.sqlite3
-within the Docker container.
+SQLite Database: Configured the SQLite database to be located at:
+/app/db.sqlite3 within the Docker container.
 
 Usage
 Accessing the Application
