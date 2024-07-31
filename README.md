@@ -189,3 +189,15 @@ Include a category when creating a poll.
 Modify the category of an existing poll.
 Implement a user interface to view polls within a specific category.
 Create an endpoint to retrieve and list polls by category.
+
+
+Setup the project as per the instruction provided in the main project and then add categories by running the below command
+
+python manage.py shell
+
+from polls.models import Category
+Category.objects.create(name="Technology")
+Category.objects.create(name="Health")
+Category.objects.create(name="Science")
+Category.objects.create(name="Sports")
+Category.objects.create(name="Entertainment")
