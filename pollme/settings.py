@@ -93,6 +93,7 @@ WSGI_APPLICATION = 'pollme.wsgi.application'
 #    }
 #}
 
+#DB settings for local
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
