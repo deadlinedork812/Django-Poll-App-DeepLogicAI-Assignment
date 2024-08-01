@@ -179,3 +179,164 @@ For detailed instructions, refer to Google's documentation on [OAuth 2.0](https:
 <div align="center">
     <h3>========Thank You !!!=========</h3>
 </div>
+
+
+# Django-Poll-App Modification by Satvik Somvanshi for Deep Logic AI Assignment
+
+# PollMe Project
+
+## Overview
+
+The PollMe project is a Django-based web application for creating and managing polls. This README provides detailed instructions on setting up, modifying, and deploying the project, including new features added and deployment steps to AWS Lambda.
+
+## Features Added
+
+### Category Feature
+
+- **Include a Category When Creating a Poll**: Users can now assign a category to a poll during creation.
+- **Modify the Category of an Existing Poll**: Allows updating the category of a poll after creation.
+
+### Category Management
+
+- **Admin Interface**: Enabled category management through the Django admin interface.
+- **Poll Creation/Edit Forms**: Updated forms to include category selection.
+
+### UI Enhancements
+
+- **Category Display**: Updated the user interface to allow viewing polls by category.
+- **Styling Improvements**: Enhanced CSS styling and interactive elements.
+
+### API Endpoints
+
+- **List Polls by Category**: New API endpoint to retrieve and list polls by category.
+  - **Endpoint**: `/api/polls/category/<category_id>/`
+
+## Setup Instructions
+
+### Clone the Repository
+
+
+git clone https://github.com/your-username/pollme-django.git
+cd pollme-django
+
+Add Categories
+To add categories to your application, follow these steps:
+
+Open the Django Shell
+
+Run the following command to access the Django shell:
+
+
+python manage.py shell
+Create Category Instances
+
+Import the Category model and create instances for each category you want to add:
+
+
+from polls.models import Category
+Category.objects.create(name="Technology")
+Category.objects.create(name="Health")
+Category.objects.create(name="Science")
+Category.objects.create(name="Sports")
+Category.objects.create(name="Entertainment")
+This will create five categories: Technology, Health, Science, Sports, and Entertainment.
+
+Exit the Shell
+
+After adding the categories, exit the Django shell by typing exit() and pressing Enter.
+
+Now, you can use these categories when creating or editing polls in your application.
+
+<Changes Made>
+<Category Feature>
+Added the ability to categorize polls. Users can now:
+Include a category when creating a poll.
+Modify the category of an existing poll.
+
+<Category Management>
+Editing Categories: Enabled editing of poll categories through:
+The admin interface.
+Poll creation/edit forms.
+<UI Enhancements>
+User Interface: 
+Updated the user interface to display polls by category with:
+Improved CSS styling.
+Interactive elements.
+
+<API Endpoints>
+New Endpoint: Added a new API endpoint to list polls by category:
+/api/polls/category/<category_id>/
+Database Path
+SQLite Database: Configured the SQLite database to be located at:
+/app/db.sqlite3 within the Docker container.
+
+Usage
+Accessing the Application
+
+Home Page: http://127.0.0.1:8000/
+Poll List by User: http://127.0.0.1:8000/polls/list/user/
+Add Poll: http://127.0.0.1:8000/polls/add/
+Edit Poll: http://127.0.0.1:8000/polls/edit/<poll_id>/
+Dashboard: http://127.0.0.1:8000/polls/dashboard/
+
+API Endpoints
+
+List Polls by Category: GET /api/polls/category/<category_id>/
+
+Running with Docker
+Build the Docker Image
+Copydocker build -t my-django-app .
+Run the Docker Container
+Copydocker run -p 8000:8000 my-django-app
+Deployment to AWS Lambda
+To deploy the Django application to AWS Lambda, follow these steps:
+1. Prepare Your Dockerfile
+Ensure your Dockerfile includes the necessary configurations:
+dockerfileCopy# Use the official Python image from the Docker Hub
+FROM python:3.9-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the requirements file into the container
+COPY requirements.txt /app/
+
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code into the container
+COPY . /app/
+
+# Ensure SQLite database file is copied
+COPY db.sqlite3 /app/
+
+# Copy static files
+COPY static /app/static
+
+# Set environment variables
+ENV DJANGO_SETTINGS_MODULE=pollme.settings
+
+# Expose the port the app runs on
+EXPOSE 8000
+
+# Run the Django application
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "pollme.wsgi:application"]
+2. Push Docker Image to AWS ECR
+Authenticate Docker to Your ECR Registry
+
+<code>Copyaws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 115011265608.dkr.ecr.ap-south-1.amazonaws.com </code>
+
+Tag Your Docker Image
+<code>Copydocker tag my-django-app:latest 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest</code>
+
+Push the Docker Image
+<code>Copydocker push 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest</code>
+
+3. Create a Lambda Function
+Use the AWS Management Console or CLI to create a new Lambda function and choose the image from ECR.
+
+4. Configure API Gateway
+Set up an API Gateway to trigger your Lambda function. Ensure the API Gateway is configured to use an HTTP or REST API endpoint.
+
+5. Testing Your Deployment
+After deploying, test your Lambda function through the API Gateway URL provided by AWS. Ensure your API Gateway points to the correct Lambda function endpoint.
