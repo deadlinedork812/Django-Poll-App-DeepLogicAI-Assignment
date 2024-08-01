@@ -248,19 +248,22 @@ After adding the categories, exit the Django shell by typing exit() and pressing
 Now, you can use these categories when creating or editing polls in your application.
 
 <Changes Made>
-Category Feature
-Categorize Polls: Added the ability to categorize polls. Users can now:
+<Category Feature>
+Added the ability to categorize polls. Users can now:
 Include a category when creating a poll.
 Modify the category of an existing poll.
-Category Management
+
+<Category Management>
 Editing Categories: Enabled editing of poll categories through:
 The admin interface.
 Poll creation/edit forms.
-UI Enhancements
-User Interface: Updated the user interface to display polls by category with:
+<UI Enhancements>
+User Interface: 
+Updated the user interface to display polls by category with:
 Improved CSS styling.
 Interactive elements.
-API Endpoints
+
+<API Endpoints>
 New Endpoint: Added a new API endpoint to list polls by category:
 /api/polls/category/<category_id>/
 Database Path
@@ -320,11 +323,12 @@ EXPOSE 8000
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "pollme.wsgi:application"]
 2. Push Docker Image to AWS ECR
 Authenticate Docker to Your ECR Registry
-Copyaws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 115011265608.dkr.ecr.ap-south-1.amazonaws.com
+
+<code>Copyaws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 115011265608.dkr.ecr.ap-south-1.amazonaws.com </code>
 Tag Your Docker Image
-Copydocker tag my-django-app:latest 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest
+<code>Copydocker tag my-django-app:latest 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest</code>
 Push the Docker Image
-Copydocker push 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest
+<code>Copydocker push 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest</code>
 3. Create a Lambda Function
 Use the AWS Management Console or CLI to create a new Lambda function and choose the image from ECR.
 4. Configure API Gateway
