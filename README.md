@@ -325,13 +325,18 @@ CMD ["gunicorn", "-b", "0.0.0.0:8000", "pollme.wsgi:application"]
 Authenticate Docker to Your ECR Registry
 
 <code>Copyaws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 115011265608.dkr.ecr.ap-south-1.amazonaws.com </code>
+
 Tag Your Docker Image
 <code>Copydocker tag my-django-app:latest 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest</code>
+
 Push the Docker Image
 <code>Copydocker push 115011265608.dkr.ecr.ap-south-1.amazonaws.com/my-django-app:latest</code>
+
 3. Create a Lambda Function
 Use the AWS Management Console or CLI to create a new Lambda function and choose the image from ECR.
+
 4. Configure API Gateway
 Set up an API Gateway to trigger your Lambda function. Ensure the API Gateway is configured to use an HTTP or REST API endpoint.
+
 5. Testing Your Deployment
 After deploying, test your Lambda function through the API Gateway URL provided by AWS. Ensure your API Gateway points to the correct Lambda function endpoint.
